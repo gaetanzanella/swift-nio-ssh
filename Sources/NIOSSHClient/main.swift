@@ -102,7 +102,7 @@ if let listen = parseResult.listen {
                 return channel.eventLoop.makeFailedFuture(SSHClientError.invalidChannelType)
             }
             // $$$ Force closing
-            DispatchQueue.global(qos: .default).asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.global(qos: .default).asyncAfter(deadline: .now() + 0.5) {
                 print("❌")
                 _ = childChannel.close(promise: nil)
             }

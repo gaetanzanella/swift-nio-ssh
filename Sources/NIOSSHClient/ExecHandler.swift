@@ -70,13 +70,12 @@ final class ExampleExecHandler: ChannelDuplexHandler {
     func channelRead(context: ChannelHandlerContext, data: NIOAny) {
         let data = self.unwrapInboundIn(data)
 
-        guard case .byteBuffer(var bytes) = data.data else {
+        guard case .byteBuffer(let bytes) = data.data else {
             fatalError("Unexpected read type")
         }
 
         switch data.type {
         case .channel:
-            print(bytes.readString(length: bytes.readableBytes)!)
             // Channel data is forwarded on, the pipe channel will handle it.
             context.fireChannelRead(self.wrapInboundOut(bytes))
             return
